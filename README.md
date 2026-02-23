@@ -79,7 +79,7 @@ pip install -r requirements.txt
 
 ## Dataset Preparation
 
-Inside the `data/` folder, create subfolders for each person:
+Inside the `data/` folder, create subfolders for each person(we downloaded AT&T dataset):
 
 ```
 data/
