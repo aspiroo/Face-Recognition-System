@@ -1,0 +1,7 @@
+# This file lists the dependencies for the project. 
+#You can install them using pip:
+numpy
+pandas
+matplotlib
+scikit-learn
+opencv-python
