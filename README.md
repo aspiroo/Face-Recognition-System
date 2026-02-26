@@ -4,12 +4,12 @@ Design a face recognition system. Assemble a dataset comprising facial images of
 
 ## Contributors
 
-| Student ID | Name |
-|---|---|
-| 2311443042 | Safwan Ismaun Amin |
-| 2231005042 | Ananya Sarkar |
-| 2231058642 | Nudrat Rahman Tushin |
-| 2221758042 | Muzahidur Rahman Saim |
+| Student ID | Name | GitHub |
+|---|---|---|
+| 2221758042 | Muzahidur Rahman Saim | [@MuzahidurSaim](https://github.com/MuzahidurSaim) |
+| 2231005042 | Ananya Sarkar | [@ananya0511sarkar-prog](https://github.com/ananya0511sarkar-prog) |
+| 2231058642 | Nudrat Rahman Tushin | [@nudrat-nrt](https://github.com/nudrat-nrt) |
+| 2311443042 | Safwan Ismaun Amin | [@aspiroo](https://github.com/aspiroo) |
 
 ---
 
