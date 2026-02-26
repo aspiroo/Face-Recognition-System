@@ -2,6 +2,7 @@
 # It uses OpenCV to read the image and Matplotlib to display it. Make sure to adjust 
 # the path to the image if necessary.
 #in terminal: cd support -> python checking_img.py
+
 import cv2
 import matplotlib.pyplot as plt
 import os
