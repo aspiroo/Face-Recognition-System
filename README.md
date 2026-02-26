@@ -2,6 +2,16 @@
 Project Prompt: 
 Design a face recognition system. Assemble a dataset comprising facial images of 10 individuals exhibiting various facial expressions. Demonstrate the performance of your method using this dataset.
 
+## Contributors
+
+| Student ID | Name |
+|---|---|
+| 2311443042 | Safwan Ismaun Amin |
+| 2231005042 | Ananya Sarkar |
+| 2231058642 | Nudrat Rahman Tushin |
+| 2221758042 | Muzahidur Rahman Saim |
+
+---
 
 ## Project Structure
 
@@ -156,13 +166,6 @@ Install using:
 pip install -r requirements.txt
 ```
 
----
-
-## Author
-
-CSE445 Face Recognition System Project
-
----
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
