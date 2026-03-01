@@ -78,7 +78,7 @@ def recognize():
     predicted_label  = svm.predict(image_pca)[0]
 
     correct = predicted_label == actual_label
-    result  = "✅ CORRECT!" if correct else "❌ WRONG!"
+    result  = "CORRECT!" if correct else " WRONG!"
 
     print(f"  Actual    : s{actual_label}")
     print(f"  Predicted : s{predicted_label}")
