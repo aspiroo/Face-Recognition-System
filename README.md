@@ -150,6 +150,19 @@ The system will output:
 
 ---
 
+## Results & Demonstrations
+
+### Training Results
+![Training Model Output](./screenshots/train-model-01.png)
+![Training Accuracy Graph](./screenshots/train-model-02.png)
+
+### Model Evaluation
+![Confusion Matrix](./screenshots/evaluate-model-01.png)
+![Classification Report](./screenshots/evaluate-model-02.png)
+![Performance Metrics](./screenshots/evaluate-model-03.png)
+
+---
+
 ## Dependencies
 
 Main libraries used:
