@@ -3,7 +3,7 @@
 # Runs the full pipeline: Load Data → Train → Evaluate → Recognize
 # -------------------------------------------------------
 # Run from repo root: python main.py
-4
+
 import sys
 import os
 
