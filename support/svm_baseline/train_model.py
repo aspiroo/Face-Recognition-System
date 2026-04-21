@@ -17,7 +17,7 @@ from sklearn.metrics import accuracy_score
 
 # Import groupmate's data loader
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from load_normalized_data import load_dataset
+from support.svm_baseline.load_normalized_data import load_dataset
 
 # ── Tuneable settings ────────────────────────────────────────────────────────
 N_COMPONENTS = 100    # number of eigenfaces to keep (try 50, 100, 150)

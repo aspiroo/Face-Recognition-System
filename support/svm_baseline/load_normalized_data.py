@@ -9,10 +9,10 @@ import numpy as np  # for numerical operations (NumPy library)
 
 def load_dataset(data_dir=None):
     # BASE_DIR is always needed (for processed_dir), so move it outside the if block
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     if data_dir is None:
-        data_dir = os.path.join(BASE_DIR, "data", "raw")                # default path to dataset, can be overridden by argument
+        data_dir = os.path.join(BASE_DIR, "data", "raw" , "att")                # default path to dataset, can be overridden by argument
 
     # --- Folder where arrays will be saved ---
     processed_dir = os.path.join(BASE_DIR, "data", "processed")         # create this folder if it doesn't exist, to store the processed .npy files for faster loading next time

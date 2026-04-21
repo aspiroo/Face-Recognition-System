@@ -16,7 +16,7 @@ from sklearn.model_selection import train_test_split
 
 # Import groupmate's data loader
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from load_normalized_data import load_dataset
+from support.svm_baseline.load_normalized_data import load_dataset
 
 # ── Settings (must match train_model.py exactly) ──────────────────────────────
 TEST_SIZE    = 0.2

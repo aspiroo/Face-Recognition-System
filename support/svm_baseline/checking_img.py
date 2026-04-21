@@ -7,8 +7,8 @@ import cv2
 import matplotlib.pyplot as plt
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-img_path = os.path.join(BASE_DIR, "data", "s1", "1.pgm")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+img_path = os.path.join(BASE_DIR, "data" , "raw" , "att", "s1", "1.pgm")
 
 img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
 
