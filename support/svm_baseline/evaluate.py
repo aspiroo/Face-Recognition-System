@@ -20,7 +20,7 @@ from sklearn.metrics import (
 )
 
 # Import groupmate's data loader
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from support.svm_baseline.load_normalized_data import load_dataset
 
 # ── Settings (must match train_model.py exactly) ─────────────────────────────

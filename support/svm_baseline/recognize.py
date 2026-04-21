@@ -15,7 +15,7 @@ import cv2
 from sklearn.model_selection import train_test_split
 
 # Import groupmate's data loader
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from support.svm_baseline.load_normalized_data import load_dataset
 
 # ── Settings (must match train_model.py exactly) ──────────────────────────────
@@ -23,7 +23,7 @@ TEST_SIZE    = 0.2
 RANDOM_STATE = 42
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-BASE_DIR  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model")
 pca_path  = os.path.join(MODEL_DIR, "pca.pkl")
 svm_path  = os.path.join(MODEL_DIR, "svm.pkl")
