@@ -8,7 +8,7 @@
 # Metric: cosine (better than euclidean for PCA face features)
 # All tuning via 5-fold stratified CV on training set.
 #
-# Run from repo root: python -m support.svm_baseline.model_knn_att
+# Run from repo root: python -m support.att.model_knn_att
 # -------------------------------------------------------
 
 import os
@@ -19,8 +19,8 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from support.svm_baseline.load_normalized_data import load_dataset
-from support.svm_baseline.preprocessing_att    import (
+from support.att.load_normalized_data import load_dataset
+from support.att.preprocessing_att    import (
     prepare_data, sweep_components, plot_sweep
 )
 

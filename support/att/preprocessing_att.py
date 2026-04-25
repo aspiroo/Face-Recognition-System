@@ -13,7 +13,7 @@
 # can call it with their own proxy classifier to find the best n_components.
 #
 # Run standalone to verify split:
-#   python -m support.svm_baseline.preprocessing_att
+#   python -m support.att.preprocessing_att
 # ─────────────────────────────────────────────────────────────────────────────
 
 import os
@@ -208,7 +208,7 @@ def plot_eigenfaces(pca, n_faces=10, save_path=None):
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    from support.svm_baseline.load_normalized_data import load_dataset
+    from support.att.load_normalized_data import load_dataset
 
     print("=" * 55)
     print("  AT&T Preprocessing — sanity check")

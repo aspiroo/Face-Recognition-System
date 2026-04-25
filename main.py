@@ -9,9 +9,9 @@ import os
 # Add support/ to path so we can import from it
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "support"))
 
-from support.svm_baseline.train_model import train
-from support.svm_baseline.evaluate    import evaluate
-from support.svm_baseline.recognize   import recognize
+from support.att.train_model import train
+from support.att.evaluate    import evaluate
+from support.att.recognize   import recognize
 
 
 def print_banner():
