@@ -18,11 +18,13 @@ from sklearn.metrics import accuracy_score
 
 # ── Imports from groupmate's shared files ────────────────────────────────────
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from support.load_data_lfw_yale import load_dataset
+from support.load_data_lfw import load_dataset
+# from support.load_data_lfw_yale import load_dataset (when using mixed dataset)
+# from support.load_data_lfw import load_dataset(if using LFW-only dataset)
 from support.preprocessing      import prepare_data
 
 # ── Settings ─────────────────────────────────────────────────────────────────
-K_VALUES     = [1, 3, 5, 7, 9, 11]   # K values to try during tuning
+K_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]   # K values to try during tuning
 CV_FOLDS     = 5                       # cross-validation folds
 DATASET_MODE = "yale_lfw"             # yale / lfw / yale_lfw
 
@@ -63,7 +65,7 @@ def train_and_evaluate(X_train_pca, X_test_pca, y_train, y_test):
 
     cv_scores = []
     for k in K_VALUES:
-        knn = KNeighborsClassifier(n_neighbors=k, metric="euclidean")
+        knn = KNeighborsClassifier(n_neighbors=k, metric="cosine")
         scores = cross_val_score(knn, X_train_pca, y_train, cv=CV_FOLDS, scoring="accuracy")
         mean_score = scores.mean()
         cv_scores.append(mean_score)
@@ -82,7 +84,7 @@ def train_and_evaluate(X_train_pca, X_test_pca, y_train, y_test):
     print("=" * 55)
 
     start_time = time.time()
-    knn_final  = KNeighborsClassifier(n_neighbors=best_k, metric="euclidean")
+    knn_final  = KNeighborsClassifier(n_neighbors=best_k, metric="cosine")
     knn_final.fit(X_train_pca, y_train)
     train_time = time.time() - start_time
 
@@ -160,13 +162,33 @@ if __name__ == "__main__":
     print("=" * 55)
     print(f" Loading dataset: {DATASET_MODE}")
     print("=" * 55)
-    X, y = load_dataset(DATASET_MODE)
+    X, y = load_dataset()
 
-    # ── Preprocess ────────────────────────────────────────────────────────────
+    # ── Auto-select best n_components ─────────────────────────────────────────
+    print("Sweeping PCA components...")
+    best_n   = 50
+    best_val = 0
+
+    for n_comp in [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200]:
+        X_tr, X_v, X_te, y_tr, y_v, y_te, _ = prepare_data(X, y, n_components=n_comp, verbose=False)
+        knn = KNeighborsClassifier(n_neighbors=1, metric="cosine")
+        knn.fit(X_tr, y_tr)
+        acc = accuracy_score(y_v, knn.predict(X_v))
+        print(f"  n_components={n_comp:>4}  K=1  val_acc={acc*100:.1f}%")
+
+        if acc > best_val:       # ← track the best
+            best_val = acc
+            best_n   = n_comp
+
+    print(f"\n  Auto-selected n_components={best_n}  (val_acc={best_val*100:.1f}%)")
+
+    # ── Preprocess with best n_components ─────────────────────────────────────
     print("=" * 55)
-    print(" Preprocessing  (60/20/20 split + PCA)")
+    print(f" Preprocessing  (60/20/20 split + PCA, n={best_n})")
     print("=" * 55)
-    X_train_pca, X_val_pca, X_test_pca, y_train, y_val, y_test, pca = prepare_data(X, y)
+    X_train_pca, X_val_pca, X_test_pca, y_train, y_val, y_test, pca = prepare_data(
+        X, y, n_components=best_n   # ← uses auto-selected value
+    )
 
     # ── Train and evaluate ────────────────────────────────────────────────────
     results = train_and_evaluate(X_train_pca, X_test_pca, y_train, y_test)
