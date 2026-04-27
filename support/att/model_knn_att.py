@@ -32,7 +32,7 @@ from sklearn.metrics         import (
 )
 
 BASE_DIR  = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODEL_DIR = os.path.join(BASE_DIR, "support", "svm_baseline", "model")
+MODEL_DIR = os.path.join(BASE_DIR, "support", "att", "model")
 os.makedirs(MODEL_DIR, exist_ok=True)
 
 K_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15]

@@ -236,6 +236,6 @@ if __name__ == "__main__":
         ax.axis("off")
 
     plt.tight_layout()
-    plt.savefig("lfw_sample_grid.png", dpi=120)
+    plt.savefig("support/lfw_sample_grid.png", dpi=120)
     print("\nSample grid saved → lfw_sample_grid.png")
     plt.show()
