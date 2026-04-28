@@ -1,0 +1,13 @@
+{
+  "dataset": "LFW",
+  "model": "CNN",
+  "accuracy": 0.08130081300813008,
+  "precision": 0.004278990158322636,
+  "recall": 0.05263157894736842,
+  "f1": 0.007914523149980214,
+  "train_time": 107.76220917701721,
+  "n_components": "N/A",
+  "params": "3xConv, GAP, lr=0.001",
+  "cv_mean": null,
+  "cv_std": null
+}

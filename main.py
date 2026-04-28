@@ -1,91 +1,243 @@
 # main.py
-# Entry point for the AT&T Face Recognition System.
-# Runs the full pipeline: Load Data → Train → Evaluate → Recognize
-# -------------------------------------------------------
-# Run from repo root: python main.py
-import sys
+# Terminal menu for Face Recognition System.
+# Location: repo root
+# Run: python main.py
+# ─────────────────────────────────────────────────────────────────────────────
+
 import os
+import sys
 
-# Add support/ to path so we can import from it
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "support"))
-
-from support.att.train_model import train
-from support.att.evaluate    import evaluate
-from support.att.recognize   import recognize
+ROOT = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, ROOT)
 
 
-def print_banner():
-    print("\n" + "=" * 55)
-    print("   AT&T Face Recognition System")
-    print("   CSE445 — Machine Learning Project")
-    print("=" * 55)
-    print("  Contributors:")
-    print("    Safwan Ismaun Amin      (2311443042)")
-    print("    Ananya Sarkar           (2231005042)")
-    print("    Nudrat Rahman Tushin    (2231058642)")
-    print("    Muzahidur Rahman Saim   (2221758042)")
-    print("=" * 55 + "\n")
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
 
 
-def print_menu():
-    print("\nWhat would you like to do?")
-    print("  [1] Run full pipeline  (Train → Evaluate → Recognize)")
-    print("  [2] Train model only")
-    print("  [3] Evaluate model only")
-    print("  [4] Recognize a random face only")
-    print("  [0] Exit")
-    return input("\nEnter choice: ").strip()
+def header():
+    print("=" * 60)
+    print("       FACE RECOGNITION SYSTEM — Main Menu")
+    print("=" * 60)
 
 
-def run_full_pipeline():
-    print("\n" + "=" * 55)
-    print("  FULL PIPELINE — Train → Evaluate → Recognize")
-    print("=" * 55)
+def section(title):
+    print(f"\n  {'─'*50}")
+    print(f"    {title}")
+    print(f"  {'─'*50}\n")
 
-    # ── Stage 1: Train ───────────────────────────────────────
-    print("\n>>> STAGE 1 — TRAINING\n")
-    pca, svm, accuracy = train()
 
-    # ── Stage 2: Evaluate ────────────────────────────────────
-    print("\n>>> STAGE 2 — EVALUATION\n")
-    evaluate()
+def pause():
+    input("\n  Press Enter to return to menu...")
 
-    # ── Stage 3: Recognize ───────────────────────────────────
-    print("\n>>> STAGE 3 — RECOGNITION (random test image)\n")
+
+MAIN_MENU = """
+  CHAPTER 1 — AT&T Dataset  (40 subjects, 80/20 split)
+  ─────────────────────────────────────────────────────
+  [1]  SVM   — train + evaluate (AT&T)
+  [2]  KNN   — train + evaluate (AT&T)
+  [3]  RF    — train + evaluate (AT&T)
+  [4]  Run ALL Chapter 1 models
+
+  CHAPTER 2 — LFW Dataset  (19 subjects, 60/20/20 split)
+  ─────────────────────────────────────────────────────
+  [5]  SVM   — train + evaluate (LFW)
+  [6]  KNN   — train + evaluate (LFW)
+  [7]  RF    — train + evaluate (LFW)
+  [8]  CNN   — train + evaluate (LFW)
+  [9]  Run ALL Chapter 2 models
+
+  UTILITIES
+  ─────────────────────────────────────────────────────
+  [10] Recognize — predict a random face (AT&T SVM)
+  [11] Evaluate  — evaluate saved AT&T SVM model
+  [12] Compare   — run all models and compare results   # ← ADD THIS
+
+
+  [0]  Exit
+  ─────────────────────────────────────────────────────
+"""
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CHAPTER 1 — AT&T
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_att_svm():
+    section("AT&T — SVM")
+    from support.att.model_svm_att import main
+    return main()
+
+
+def run_att_knn():
+    section("AT&T — KNN")
+    from support.att.model_knn_att import main
+    return main()
+
+
+def run_att_rf():
+    section("AT&T — Random Forest")
+    from support.att.model_rf_att import main
+    return main()
+
+
+def run_att_all():
+    section("AT&T — Running ALL models")
+
+    print("  [1/3] SVM...")
+    from support.att.model_svm_att import main as svm_main
+    r_svm = svm_main()
+
+    print("\n  [2/3] KNN...")
+    from support.att.model_knn_att import main as knn_main
+    r_knn = knn_main()
+
+    print("\n  [3/3] Random Forest...")
+    from support.att.model_rf_att import main as rf_main
+    r_rf = rf_main()
+
+    print("\n" + "=" * 60)
+    print("  AT&T — Final Results Summary")
+    print("=" * 60)
+    print(f"  SVM  : {r_svm['accuracy']*100:.2f}%")
+    print(f"  KNN  : {r_knn['accuracy']*100:.2f}%")
+    print(f"  RF   : {r_rf['accuracy']*100:.2f}%")
+    print("=" * 60)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CHAPTER 2 — LFW
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_lfw_svm():
+    section("LFW — SVM")
+    from support.lfw.model_svm import main
+    return main()
+
+
+def run_lfw_knn():
+    section("LFW — KNN")
+    from support.lfw.model_knn import main
+    return main()
+
+
+def run_lfw_rf():
+    section("LFW — Random Forest")
+    from support.lfw.model_rf import main
+    return main()
+
+
+def run_lfw_cnn():
+    section("LFW — CNN")
+    from support.lfw.model_cnn import main
+    return main()
+
+
+def run_lfw_all():
+    section("LFW — Running ALL models")
+
+    print("  [1/4] SVM...")
+    from support.lfw.model_svm import main as svm_main
+    r_svm = svm_main()
+
+    print("\n  [2/4] KNN...")
+    from support.lfw.model_knn import main as knn_main
+    r_knn = knn_main()
+
+    print("\n  [3/4] Random Forest...")
+    from support.lfw.model_rf import main as rf_main
+    r_rf = rf_main()
+
+    print("\n  [4/4] CNN...")
+    from support.lfw.model_cnn import main as cnn_main
+    r_cnn = cnn_main()
+
+    print("\n" + "=" * 60)
+    print("  LFW — Final Results Summary")
+    print("=" * 60)
+    print(f"  SVM  : {r_svm['accuracy']*100:.2f}%")
+    print(f"  KNN  : {r_knn['accuracy']*100:.2f}%")
+    print(f"  RF   : {r_rf['accuracy']*100:.2f}%")
+    print(f"  CNN  : {r_cnn['accuracy']*100:.2f}%")
+    print("=" * 60)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# UTILITIES
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_recognize():
+    section("Recognize — Random AT&T Face (SVM)")
+    from support.att.recognize import recognize
     recognize()
 
-    print("\n" + "=" * 55)
-    print(f"  PIPELINE COMPLETE — Final Accuracy: {accuracy * 100:.2f}%")
-    print("=" * 55 + "\n")
 
+def run_evaluate():
+    section("Evaluate — Saved AT&T SVM Model")
+    from support.att.evaluate import evaluate
+    evaluate()
+
+def run_compare():
+    section("Full Model Comparison — All 7 Models")
+    from support.compare_models import main
+    main()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DISPATCH
+# ─────────────────────────────────────────────────────────────────────────────
+
+ACTIONS = {
+    "1"  : run_att_svm,
+    "2"  : run_att_knn,
+    "3"  : run_att_rf,
+    "4"  : run_att_all,
+    "5"  : run_lfw_svm,
+    "6"  : run_lfw_knn,
+    "7"  : run_lfw_rf,
+    "8"  : run_lfw_cnn,
+    "9"  : run_lfw_all,
+    "10" : run_recognize,
+    "11" : run_evaluate,
+    "12" : run_compare, 
+}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN LOOP
+# ─────────────────────────────────────────────────────────────────────────────
 
 def main():
-    print_banner()
-
     while True:
-        choice = print_menu()
+        clear()
+        header()
+        print(MAIN_MENU)
 
-        if choice == "1":
-            run_full_pipeline()
+        choice = input("  Enter choice: ").strip()
 
-        elif choice == "2":
-            print("\n>>> TRAINING\n")
-            train()
+        if choice == "0":
+            print("\n  Goodbye!\n")
+            sys.exit(0)
 
-        elif choice == "3":
-            print("\n>>> EVALUATING\n")
-            evaluate()
+        action = ACTIONS.get(choice)
 
-        elif choice == "4":
-            print("\n>>> RECOGNIZING\n")
-            recognize()
+        if action is None:
+            print(f"\n  Invalid choice '{choice}' — please try again.")
+            pause()
+            continue
 
-        elif choice == "0":
-            print("\nExiting. Goodbye!\n")
-            break
-
-        else:
-            print("\n  Invalid choice. Please enter 0, 1, 2, 3, or 4.")
+        clear()
+        try:
+            action()
+            pause()
+        except KeyboardInterrupt:
+            print("\n\n  Interrupted — returning to menu.")
+            pause()
+        except Exception as e:
+            print(f"\n  ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            pause()
 
 
 if __name__ == "__main__":

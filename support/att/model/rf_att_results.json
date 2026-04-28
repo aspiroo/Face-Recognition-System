@@ -1,0 +1,13 @@
+{
+  "dataset": "AT&T",
+  "model": "RF",
+  "accuracy": 0.925,
+  "precision": 0.925,
+  "recall": 0.925,
+  "f1": 0.9141666666666666,
+  "train_time": 0.9001619815826416,
+  "n_components": 70,
+  "params": "n_est=700, max_feat=log2",
+  "cv_mean": 94.0625,
+  "cv_std": 1.8221724671391561
+}

@@ -1,0 +1,13 @@
+{
+  "dataset": "LFW",
+  "model": "KNN",
+  "accuracy": 0.3902439024390244,
+  "precision": 0.4774378893280543,
+  "recall": 0.36586826915774284,
+  "f1": 0.3819775905571082,
+  "train_time": 0.0,
+  "n_components": 160,
+  "params": "K=19, metric=cosine",
+  "cv_mean": 37.781301709873134,
+  "cv_std": 2.483575681338748
+}
