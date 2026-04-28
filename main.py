@@ -51,7 +51,7 @@ MAIN_MENU = """
   ─────────────────────────────────────────────────────
   [10] Recognize — predict a random face (AT&T SVM)
   [11] Evaluate  — evaluate saved AT&T SVM model
-  [12] Compare   — run all models and compare results   # ← ADD THIS
+  [12] Compare   — run all models and compare results  
 
 
   [0]  Exit
