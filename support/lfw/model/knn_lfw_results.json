@@ -5,7 +5,7 @@
   "precision": 0.4774378893280543,
   "recall": 0.36586826915774284,
   "f1": 0.3819775905571082,
-  "train_time": 0.0,
+  "train_time": 0.0009763240814208984,
   "n_components": 160,
   "params": "K=19, metric=cosine",
   "cv_mean": 37.781301709873134,

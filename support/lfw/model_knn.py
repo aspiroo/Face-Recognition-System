@@ -6,13 +6,20 @@
 
 import os
 import sys
+import json
 import time
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from sklearn.neighbors       import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics         import accuracy_score, classification_report
+from sklearn.metrics         import (
+    accuracy_score, classification_report,
+    confusion_matrix, ConfusionMatrixDisplay,
+    precision_score, recall_score, f1_score
+)
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
@@ -71,12 +78,27 @@ def _plot_k_curve(k_values, cv_scores, best_k):
             color="steelblue", label="CV Accuracy")
     ax.scatter([best_k], [cv_scores[k_values.index(best_k)]*100],
                color="red", s=120, zorder=5, label=f"Best K={best_k}")
-    ax.set_xlabel("K"); ax.set_ylabel("CV Accuracy (%)"); ax.set_xticks(k_values)
-    ax.set_title("KNN — Accuracy vs K  (Bias-Variance Tradeoff)")
+    ax.set_xlabel("K (Number of Neighbours)", fontsize=12)
+    ax.set_ylabel("Cross-Validation Accuracy (%)", fontsize=12)
+    ax.set_title("LFW KNN — Accuracy vs K  (Bias-Variance Tradeoff)", fontsize=13)
+    ax.set_xticks(k_values)
     ax.legend(); ax.grid(True, alpha=0.3); plt.tight_layout()
     plot_path = os.path.join(MODEL_DIR, "knn_k_curve.png")
     plt.savefig(plot_path, dpi=150); plt.close()
     print(f"\n  Saved → {plot_path}")
+
+
+def plot_confusion_matrix(y_test, y_pred, save_path=None):
+    cm     = confusion_matrix(y_test, y_pred)
+    labels = sorted(np.unique(y_test))
+    fig, ax = plt.subplots(figsize=(12, 10))
+    ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels).plot(
+        ax=ax, colorbar=True, cmap="Blues", xticks_rotation=45)
+    ax.set_title("LFW KNN — Confusion Matrix", fontsize=14)
+    plt.tight_layout()
+    save_path = save_path or os.path.join(MODEL_DIR, "knn_confusion_matrix.png")
+    plt.savefig(save_path, dpi=150); plt.close()
+    print(f"  Saved → {save_path}")
 
 
 def main():
@@ -113,14 +135,14 @@ def main():
     print("\n>>> STEP 5 — Classification Report\n")
     print(classification_report(y_test, results["y_pred"], zero_division=0))
 
+    print("\n>>> STEP 6 — Saving Confusion Matrix\n")
+    plot_confusion_matrix(y_test, results["y_pred"])
+
     print("\n" + "=" * 55)
     print(f"  DONE — Test Accuracy: {results['accuracy']*100:.2f}%")
     print("=" * 55)
 
-    # ── Save results to JSON ──
-    import json
-    from sklearn.metrics import precision_score, recall_score, f1_score
-
+    # ── Save results to JSON ──────────────────────────────────────────────────
     json_data = {
         "dataset"      : "LFW",
         "model"        : "KNN",
@@ -129,16 +151,14 @@ def main():
         "recall"       : float(recall_score   (y_test, results["y_pred"], average="macro", zero_division=0)),
         "f1"           : float(f1_score       (y_test, results["y_pred"], average="macro", zero_division=0)),
         "train_time"   : results["train_time"],
-        "n_components" : best_n,   # ← your KNN file uses this
+        "n_components" : best_n,
         "params"       : f"K={results['best_k']}, metric=cosine",
         "cv_mean"      : float(results["cv_scores"].mean() * 100),
         "cv_std"       : float(results["cv_scores"].std()  * 100),
     }
-
     json_path = os.path.join(MODEL_DIR, "knn_lfw_results.json")
     with open(json_path, "w") as f:
         json.dump(json_data, f, indent=2)
-
     print(f"  Results saved → {json_path}")
 
     return {
