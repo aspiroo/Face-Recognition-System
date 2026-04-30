@@ -1,6 +1,8 @@
 # model_cnn.py — LFW, Chapter 2. Location: support/lfw/model_cnn.py
 import os, sys, time
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from support.lfw.load_data_lfw import load_dataset

@@ -1,6 +1,8 @@
 # model_knn_att.py — AT&T, Chapter 1. Location: support/att/model_knn_att.py
 import os, sys, time
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from support.att.load_normalized_data import load_dataset
